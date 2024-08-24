@@ -4,7 +4,6 @@ import {TextArea, TextField} from "@vaadin/react-components";
 import {Button} from "@vaadin/react-components/Button.js";
 import {Notification} from '@vaadin/react-components/Notification.js';
 import "../main.css";
-import axios from 'axios';
 
 export const config: ViewConfig = {
   menu: {order: 1, icon: 'line-awesome/svg/key-solid.svg'},
@@ -25,18 +24,18 @@ export default function PBKDF2View() {
       return;
     }
 
-    try {
-      const response = await axios.post('/pbkdf2/hash', { password }, {
+    const handleSubmit = async (event: { preventDefault: () => void; }) => {
+      event.preventDefault();
+      const response = await fetch('/pbkdf2/hash', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
+        body: JSON.stringify({ password }),
       });
-      setHashedPassword(response.data.hashedPassword);
-    } catch (error) {
-      const notification = Notification.show('An error occurred while hashing the password');
-      notification.setAttribute('theme', 'error');
-      console.error('Error:', error);
-    }
+      const data = await response.json();
+      setHashedPassword(data.hashedPassword);
+    };
   };
 
   return (
