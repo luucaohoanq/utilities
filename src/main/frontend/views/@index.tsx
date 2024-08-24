@@ -1,13 +1,13 @@
-import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
-import { useSignal } from '@vaadin/hilla-react-signals';
-import { Button } from '@vaadin/react-components/Button.js';
-import { Notification } from '@vaadin/react-components/Notification.js';
-import { TextField } from '@vaadin/react-components/TextField.js';
-import { HelloWorldService } from 'Frontend/generated/endpoints.js';
+import {ViewConfig} from '@vaadin/hilla-file-router/types.js';
+import {useSignal} from '@vaadin/hilla-react-signals';
+import {Button} from '@vaadin/react-components/Button.js';
+import {Notification} from '@vaadin/react-components/Notification.js';
+import {CountStringService} from 'Frontend/generated/endpoints.js';
+import {TextArea} from "@vaadin/react-components";
 
 export const config: ViewConfig = {
-  menu: { order: 0, icon: 'line-awesome/svg/globe-solid.svg' },
-  title: 'Hello World',
+  menu: {order: 0, icon: 'line-awesome/svg/globe-solid.svg'},
+  title: 'Count String',
 };
 
 export default function HelloWorldView() {
@@ -16,19 +16,20 @@ export default function HelloWorldView() {
   return (
     <>
       <section className="flex p-m gap-m items-end">
-        <TextField
-          label="Your name"
+        <TextArea
+          label="Enter String"
           onValueChanged={(e) => {
             name.value = e.detail.value;
           }}
         />
         <Button
           onClick={async () => {
-            const serverResponse = await HelloWorldService.sayHello(name.value);
-            Notification.show(serverResponse);
+            const serverResponse = await CountStringService.count(name.value);
+            const notification  = Notification.show(serverResponse);
+            notification.setAttribute('theme', 'success');
           }}
         >
-          Say hello
+          Submit
         </Button>
       </section>
     </>

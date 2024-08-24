@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 @BrowserCallable
 @AnonymousAllowed
 @Service
-public class HelloWorldService {
+public class CountStringService {
 
-    public String sayHello(String name) {
-        if (name.isEmpty()) {
-            return "Hello stranger";
+    public String count(String data) {
+        if (data.isEmpty()) {
+            return "Empty String";
         } else {
-            return "Hello " + name;
+            return data.length() + " characters";
         }
     }
 }
