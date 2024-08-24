@@ -14,24 +14,24 @@ export default function HelloWorldView() {
   const name = useSignal('');
 
   return (
-    <>
-      <section className="flex p-m gap-m items-end">
-        <TextArea
-          label="Enter String"
-          onValueChanged={(e) => {
-            name.value = e.detail.value;
-          }}
-        />
-        <Button
-          onClick={async () => {
-            const serverResponse = await CountStringService.count(name.value);
-            const notification  = Notification.show(serverResponse);
-            notification.setAttribute('theme', 'success');
-          }}
-        >
-          Submit
-        </Button>
-      </section>
-    </>
+      <>
+        <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+          <TextArea className={'w-full'}
+              label="Enter String"
+              onValueChanged={(e) => {
+                name.value = e.detail.value;
+              }}
+          />
+          <Button
+              onClick={async () => {
+                const serverResponse = await CountStringService.count(name.value);
+                const notification = Notification.show(serverResponse);
+                notification.setAttribute('theme', 'success');
+              }}
+          >
+            Submit
+          </Button>
+        </section>
+      </>
   );
 }
